@@ -2,87 +2,122 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Quiz Game Design System - Game Show Aesthetic */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Background - Deep Navy */
+    --background: 222 47% 8%;
+    --foreground: 45 100% 96%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card surfaces */
+    --card: 222 40% 12%;
+    --card-foreground: 45 100% 96%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 222 40% 12%;
+    --popover-foreground: 45 100% 96%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Rich Gold */
+    --primary: 45 100% 50%;
+    --primary-foreground: 222 47% 8%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Deep Blue */
+    --secondary: 220 60% 20%;
+    --secondary-foreground: 45 100% 96%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted */
+    --muted: 222 30% 18%;
+    --muted-foreground: 220 20% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Amber Glow */
+    --accent: 35 100% 55%;
+    --accent-foreground: 222 47% 8%;
+
+    /* Mode Colors */
+    --milhao: 45 100% 50%;
+    --milhao-glow: 45 100% 60%;
+    --jornada: 200 100% 50%;
+    --jornada-glow: 200 100% 65%;
+    --sobrevivencia: 0 85% 55%;
+    --sobrevivencia-glow: 0 85% 65%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 222 30% 20%;
+    --input: 222 30% 20%;
+    --ring: 45 100% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-background: linear-gradient(180deg, 
+      hsl(222 47% 6%) 0%, 
+      hsl(222 47% 12%) 50%, 
+      hsl(222 47% 8%) 100%);
+    
+    --gradient-gold: linear-gradient(135deg, 
+      hsl(45 100% 45%) 0%, 
+      hsl(45 100% 55%) 50%, 
+      hsl(35 100% 50%) 100%);
+    
+    --gradient-milhao: linear-gradient(135deg, 
+      hsl(45 100% 40%) 0%, 
+      hsl(45 100% 55%) 50%, 
+      hsl(35 100% 45%) 100%);
+    
+    --gradient-jornada: linear-gradient(135deg, 
+      hsl(200 100% 40%) 0%, 
+      hsl(200 100% 55%) 50%, 
+      hsl(210 100% 45%) 100%);
+    
+    --gradient-sobrevivencia: linear-gradient(135deg, 
+      hsl(0 85% 45%) 0%, 
+      hsl(0 85% 55%) 50%, 
+      hsl(10 85% 50%) 100%);
+
+    /* Shadows */
+    --shadow-gold: 0 0 30px hsl(45 100% 50% / 0.4);
+    --shadow-blue: 0 0 30px hsl(200 100% 50% / 0.4);
+    --shadow-red: 0 0 30px hsl(0 85% 55% / 0.4);
+    --shadow-button: 0 4px 20px hsl(0 0% 0% / 0.5);
+
+    /* Typography */
+    --font-display: 'Oswald', sans-serif;
+    --font-body: 'Roboto', sans-serif;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
+    --background: 222 47% 8%;
+    --foreground: 45 100% 96%;
+    --card: 222 40% 12%;
+    --card-foreground: 45 100% 96%;
+    --popover: 222 40% 12%;
+    --popover-foreground: 45 100% 96%;
+    --primary: 45 100% 50%;
+    --primary-foreground: 222 47% 8%;
+    --secondary: 220 60% 20%;
+    --secondary-foreground: 45 100% 96%;
+    --muted: 222 30% 18%;
+    --muted-foreground: 220 20% 60%;
+    --accent: 35 100% 55%;
+    --accent-foreground: 222 47% 8%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 222 30% 20%;
+    --input: 222 30% 20%;
+    --ring: 45 100% 50%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -99,7 +134,263 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    font-family: var(--font-body);
+  }
+
   body {
     @apply bg-background text-foreground;
+    background: var(--gradient-background);
+    min-height: 100vh;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+/* Animation Keyframes */
+@keyframes pulse-glow {
+  0%, 100% {
+    filter: brightness(1);
+    box-shadow: var(--shadow-button);
+  }
+  50% {
+    filter: brightness(1.1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes spotlight {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@layer components {
+  /* Game Menu Container */
+  .game-menu {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .game-menu::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, 
+      hsl(45 100% 50% / 0.08) 0%, 
+      transparent 60%);
+    pointer-events: none;
+    animation: spotlight 4s ease-in-out infinite;
+  }
+
+  /* Title Styles */
+  .game-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-bottom: 1rem;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 10px hsl(45 100% 50% / 0.5));
+  }
+
+  .game-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: hsl(var(--muted-foreground));
+    text-align: center;
+    margin-bottom: 4rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* Button Container */
+  .menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  /* Base Game Button */
+  .game-button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .game-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+
+  .game-button:hover::before {
+    left: 100%;
+  }
+
+  .game-button:hover {
+    transform: translateY(-4px) scale(1.02);
+  }
+
+  .game-button:active {
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .button-subtitle {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    margin-top: 0.5rem;
+    opacity: 0.9;
+  }
+
+  /* Show do Milhão Button */
+  .button-milhao {
+    background: var(--gradient-milhao);
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-gold), var(--shadow-button);
+  }
+
+  .button-milhao:hover {
+    box-shadow: 0 0 50px hsl(45 100% 50% / 0.6), var(--shadow-button);
+  }
+
+  /* Modo Jornada Button */
+  .button-jornada {
+    background: var(--gradient-jornada);
+    color: hsl(var(--foreground));
+    box-shadow: var(--shadow-blue), var(--shadow-button);
+  }
+
+  .button-jornada:hover {
+    box-shadow: 0 0 50px hsl(200 100% 50% / 0.6), var(--shadow-button);
+  }
+
+  /* Modo Sobrevivência Button */
+  .button-sobrevivencia {
+    background: var(--gradient-sobrevivencia);
+    color: hsl(var(--foreground));
+    box-shadow: var(--shadow-red), var(--shadow-button);
+  }
+
+  .button-sobrevivencia:hover {
+    box-shadow: 0 0 50px hsl(0 85% 55% / 0.6), var(--shadow-button);
+  }
+
+  /* Decorative Elements */
+  .decorative-line {
+    width: 100px;
+    height: 3px;
+    background: var(--gradient-gold);
+    border-radius: 2px;
+    margin: 0 auto 2rem;
+  }
+
+  /* Icon styling within buttons */
+  .button-icon {
+    width: 2rem;
+    height: 2rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+  }
+
+  /* Footer */
+  .menu-footer {
+    position: absolute;
+    bottom: 2rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+    letter-spacing: 0.05em;
+  }
+
+  /* Particle/Star decorations */
+  .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: hsl(45 100% 70%);
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .star:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+  .star:nth-child(2) { top: 20%; left: 80%; animation-delay: 0.5s; }
+  .star:nth-child(3) { top: 60%; left: 5%; animation-delay: 1s; }
+  .star:nth-child(4) { top: 70%; left: 90%; animation-delay: 1.5s; }
+  .star:nth-child(5) { top: 40%; left: 95%; animation-delay: 2s; }
+  .star:nth-child(6) { top: 85%; left: 15%; animation-delay: 2.5s; }
 }
