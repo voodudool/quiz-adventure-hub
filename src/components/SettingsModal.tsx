@@ -87,10 +87,8 @@ const SettingsModal = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="game-button button-config">
-          <Settings className="button-icon" />
-          Configurações
-          <span className="button-subtitle">Ajuste áudio, estilo e categorias</span>
+        <button className="settings-icon-button" aria-label="Configurações">
+          <Settings />
         </button>
       </DialogTrigger>
       <DialogContent className="settings-modal">
