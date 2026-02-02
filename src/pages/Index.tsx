@@ -1,4 +1,5 @@
 import { Crown, Map, Skull } from "lucide-react";
+import SettingsModal from "@/components/SettingsModal";
 
 const Index = () => {
   return (
@@ -46,6 +47,9 @@ const Index = () => {
             Sobreviva o máximo que puder
           </span>
         </button>
+
+        {/* Settings */}
+        <SettingsModal />
       </div>
 
       {/* Footer */}
