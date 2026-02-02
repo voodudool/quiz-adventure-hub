@@ -339,7 +339,61 @@
     box-shadow: 0 0 50px hsl(0 85% 55% / 0.6), var(--shadow-button);
   }
 
-  /* Config Button */
+  /* Custom Mode Button */
+  .button-custom {
+    background: linear-gradient(135deg, 
+      hsl(280 70% 40%) 0%, 
+      hsl(300 70% 50%) 50%, 
+      hsl(320 70% 45%) 100%);
+    color: hsl(var(--foreground));
+    box-shadow: 0 0 30px hsl(290 70% 50% / 0.4), var(--shadow-button);
+  }
+
+  .button-custom:hover {
+    box-shadow: 0 0 50px hsl(290 70% 55% / 0.6), var(--shadow-button);
+  }
+
+  /* Settings Corner Button */
+  .settings-corner {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 10;
+  }
+
+  .settings-icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    background: linear-gradient(135deg, 
+      hsl(260 50% 35%) 0%, 
+      hsl(260 50% 45%) 50%, 
+      hsl(270 50% 40%) 100%);
+    color: hsl(var(--foreground));
+    box-shadow: 0 0 20px hsl(260 50% 45% / 0.4), var(--shadow-button);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .settings-icon-button svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .settings-icon-button:hover {
+    transform: scale(1.1) rotate(45deg);
+    box-shadow: 0 0 40px hsl(260 50% 50% / 0.6), var(--shadow-button);
+  }
+
+  .settings-icon-button:active {
+    transform: scale(1.05) rotate(45deg);
+  }
+
+  /* Old Config Button - kept for reference but renamed */
   .button-config {
     background: linear-gradient(135deg, 
       hsl(260 50% 35%) 0%, 

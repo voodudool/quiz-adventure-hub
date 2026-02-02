@@ -1,9 +1,14 @@
-import { Crown, Map, Skull } from "lucide-react";
+import { Crown, Map, Skull, Sparkles } from "lucide-react";
 import SettingsModal from "@/components/SettingsModal";
 
 const Index = () => {
   return (
     <div className="game-menu">
+      {/* Settings Button - Top Right Corner */}
+      <div className="settings-corner">
+        <SettingsModal />
+      </div>
+
       {/* Decorative Stars */}
       <div className="stars">
         <div className="star" />
@@ -48,8 +53,14 @@ const Index = () => {
           </span>
         </button>
 
-        {/* Settings */}
-        <SettingsModal />
+        {/* Custom Mode */}
+        <button className="game-button button-custom">
+          <Sparkles className="button-icon" />
+          Modo Personalizado
+          <span className="button-subtitle">
+            Configure seu próprio desafio
+          </span>
+        </button>
       </div>
 
       {/* Footer */}
