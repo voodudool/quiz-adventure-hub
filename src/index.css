@@ -678,36 +678,73 @@
 
   /* Settings Footer */
   .settings-footer {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid hsl(var(--border) / 0.3);
     display: flex;
     justify-content: center;
   }
 
   /* Categories Confirm Container */
   .categories-confirm-container {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     display: flex;
     justify-content: center;
   }
 
-  /* Circle Confirm Button */
+  /* Circle Confirm Button Base */
   .circle-confirm-button {
-    width: 48px;
-    height: 48px;
+    position: relative;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    background: var(--gradient-gold);
-    color: hsl(var(--primary-foreground));
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .circle-confirm-button:hover {
+  /* Save Button Variant - Gold with outer ring */
+  .circle-confirm-save {
+    background: var(--gradient-gold);
+    color: hsl(var(--primary-foreground));
+    box-shadow: 
+      0 0 0 3px hsl(var(--background)),
+      0 0 0 5px hsl(var(--primary) / 0.4),
+      0 4px 12px hsl(var(--primary) / 0.3);
+  }
+
+  .circle-confirm-save:hover {
     transform: scale(1.1);
-    box-shadow: var(--shadow-gold);
+    box-shadow: 
+      0 0 0 3px hsl(var(--background)),
+      0 0 0 6px hsl(var(--primary) / 0.6),
+      0 8px 24px hsl(var(--primary) / 0.4);
+  }
+
+  /* Check Button Variant - Emerald green accent */
+  .circle-confirm-check {
+    background: linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(142, 69%, 28%) 100%);
+    color: white;
+    box-shadow: 
+      0 0 0 3px hsl(var(--background)),
+      0 0 0 5px hsl(142, 76%, 36%, 0.3),
+      0 4px 12px hsl(142, 76%, 36%, 0.3);
+  }
+
+  .circle-confirm-check:hover {
+    transform: scale(1.1);
+    box-shadow: 
+      0 0 0 3px hsl(var(--background)),
+      0 0 0 6px hsl(142, 76%, 36%, 0.5),
+      0 8px 24px hsl(142, 76%, 36%, 0.4);
+  }
+
+  /* Active/Press state for both */
+  .circle-confirm-button:active {
+    transform: scale(0.95);
   }
 
   /* Decorative Elements */

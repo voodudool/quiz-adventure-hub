@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Settings, Volume2, List, Folder, Save, Upload, X } from "lucide-react";
+import { Settings, Volume2, List, Folder, Save, Upload, X, Check } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -187,7 +187,7 @@ const SettingsModal = () => {
 
             {/* Save Changes Button */}
             <div className="settings-footer">
-              <button className="circle-confirm-button" onClick={() => setOpen(false)} aria-label="Salvar Alterações">
+              <button className="circle-confirm-button circle-confirm-save" onClick={() => setOpen(false)} aria-label="Salvar Alterações">
                 <Save className="w-5 h-5" />
               </button>
             </div>
@@ -224,8 +224,8 @@ const SettingsModal = () => {
 
             {/* Confirm Categories Button - Right below the list */}
             <div className="categories-confirm-container">
-              <button className="circle-confirm-button" onClick={() => setShowCategories(false)} aria-label="Confirmar Categorias">
-                <Save className="w-5 h-5" />
+              <button className="circle-confirm-button circle-confirm-check" onClick={() => setShowCategories(false)} aria-label="Confirmar Categorias">
+                <Check className="w-6 h-6" strokeWidth={3} />
               </button>
             </div>
 
