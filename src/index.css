@@ -679,50 +679,34 @@
   /* Settings Footer */
   .settings-footer {
     margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid hsl(var(--border));
+    display: flex;
+    justify-content: center;
   }
 
-  .save-changes-button {
-    width: 100%;
-    background: var(--gradient-gold);
-    color: hsl(var(--primary-foreground));
-    font-family: var(--font-display);
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    transition: all 0.2s ease;
-  }
-
-  .save-changes-button:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-gold);
-  }
-
-  /* Categories Footer */
-  .categories-footer {
+  /* Categories Confirm Container */
+  .categories-confirm-container {
     margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid hsl(var(--border));
+    display: flex;
+    justify-content: center;
   }
 
-  .confirm-categories-button {
-    width: 100%;
+  /* Circle Confirm Button */
+  .circle-confirm-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     background: var(--gradient-gold);
     color: hsl(var(--primary-foreground));
-    font-family: var(--font-display);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.75rem 1.5rem;
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     transition: all 0.2s ease;
   }
 
-  .confirm-categories-button:hover {
-    transform: translateY(-2px);
+  .circle-confirm-button:hover {
+    transform: scale(1.1);
     box-shadow: var(--shadow-gold);
   }
 

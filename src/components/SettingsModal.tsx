@@ -187,10 +187,9 @@ const SettingsModal = () => {
 
             {/* Save Changes Button */}
             <div className="settings-footer">
-              <Button className="save-changes-button" onClick={() => setOpen(false)}>
-                <Save className="w-4 h-4 mr-2" />
-                Salvar Alterações
-              </Button>
+              <button className="circle-confirm-button" onClick={() => setOpen(false)} aria-label="Salvar Alterações">
+                <Save className="w-5 h-5" />
+              </button>
             </div>
           </div>
         ) : (
@@ -221,6 +220,13 @@ const SettingsModal = () => {
                   <span>{category}</span>
                 </label>
               ))}
+            </div>
+
+            {/* Confirm Categories Button - Right below the list */}
+            <div className="categories-confirm-container">
+              <button className="circle-confirm-button" onClick={() => setShowCategories(false)} aria-label="Confirmar Categorias">
+                <Save className="w-5 h-5" />
+              </button>
             </div>
 
             {/* Save/Load Section */}
@@ -286,12 +292,6 @@ const SettingsModal = () => {
               )}
             </div>
 
-            {/* Confirm Categories Button */}
-            <div className="categories-footer">
-              <Button className="confirm-categories-button" onClick={() => setShowCategories(false)}>
-                Confirmar Categorias Selecionadas
-              </Button>
-            </div>
           </div>
         )}
       </DialogContent>
