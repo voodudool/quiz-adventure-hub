@@ -184,6 +184,14 @@ const SettingsModal = () => {
                 </span>
               </button>
             </div>
+
+            {/* Save Changes Button */}
+            <div className="settings-footer">
+              <Button className="save-changes-button" onClick={() => setOpen(false)}>
+                <Save className="w-4 h-4 mr-2" />
+                Salvar Alterações
+              </Button>
+            </div>
           </div>
         ) : (
           <div className="categories-panel">
@@ -276,6 +284,13 @@ const SettingsModal = () => {
                   ))}
                 </div>
               )}
+            </div>
+
+            {/* Confirm Categories Button */}
+            <div className="categories-footer">
+              <Button className="confirm-categories-button" onClick={() => setShowCategories(false)}>
+                Confirmar Categorias Selecionadas
+              </Button>
             </div>
           </div>
         )}
