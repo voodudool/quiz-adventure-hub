@@ -32,12 +32,13 @@ const Index = () => {
       {/* Menu Buttons */}
       <div className="menu-buttons">
         {/* Show do Milhão */}
-        <button className="game-button button-milhao">
+        <button className="game-button button-milhao coming-soon" disabled>
           <Crown className="button-icon" />
           Show do Milhão
           <span className="button-subtitle">
             Responda e ganhe prêmios crescentes
           </span>
+          <span className="coming-soon-badge">Em breve...</span>
         </button>
 
         {/* Modo Jornada */}
@@ -59,12 +60,13 @@ const Index = () => {
         </button>
 
         {/* Custom Mode */}
-        <button className="game-button button-custom">
+        <button className="game-button button-custom coming-soon" disabled>
           <Sparkles className="button-icon" />
           Modo Personalizado
           <span className="button-subtitle">
             Configure seu próprio desafio
           </span>
+          <span className="coming-soon-badge">Em breve...</span>
         </button>
       </div>
 
