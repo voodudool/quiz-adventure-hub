@@ -21,7 +21,7 @@ const LoadingModal = ({ onLoadComplete }: LoadingModalProps) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
-    const totalDuration = 1500; // Total loading time in ms
+    const totalDuration = 30000; // Total loading time in ms (30 seconds)
     const stepDuration = totalDuration / LOADING_STEPS.length;
     const progressInterval = 50;
     const progressIncrement = (100 / totalDuration) * progressInterval;
