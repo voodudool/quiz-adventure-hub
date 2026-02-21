@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Crown, Map, Skull, Sparkles } from "lucide-react";
 import SettingsModal from "@/components/SettingsModal";
+import LeaderboardModal from "@/components/LeaderboardModal";
 import LoadingModal from "@/components/LoadingModal";
-
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -12,6 +12,7 @@ const Index = () => {
       {/* Settings Button - Top Right Corner */}
       <div className="settings-corner">
         <SettingsModal />
+        <LeaderboardModal />
       </div>
 
       {/* Decorative Stars */}
