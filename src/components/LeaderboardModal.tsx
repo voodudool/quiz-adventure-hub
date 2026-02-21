@@ -1,5 +1,5 @@
-import { Trophy, Map, Skull } from "lucide-react";
-import { useState } from "react";
+import { Trophy, Map, Skull, Search, ArrowDownWideNarrow } from "lucide-react";
+import { useState, useMemo } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,33 +10,104 @@ import {
 
 type GameMode = "jornada" | "sobrevivencia";
 
-const MOCK_LEADERBOARD = {
-  jornada: [
-    { rank: 1, name: "Carlos M.", score: 14850, stage: "3/3" },
-    { rank: 2, name: "Ana P.", score: 12300, stage: "3/3" },
-    { rank: 3, name: "Pedro S.", score: 9800, stage: "2/3" },
-    { rank: 4, name: "Maria L.", score: 7500, stage: "2/3" },
-    { rank: 5, name: "João R.", score: 5200, stage: "1/3" },
-  ],
-  sobrevivencia: [
-    { rank: 1, name: "Lucas F.", score: 42, stage: undefined },
-    { rank: 2, name: "Bruna K.", score: 38, stage: undefined },
-    { rank: 3, name: "Rafael D.", score: 31, stage: undefined },
-    { rank: 4, name: "Camila N.", score: 25, stage: undefined },
-    { rank: 5, name: "Thiago V.", score: 19, stage: undefined },
-  ],
+type SortKeyJornada = "points" | "lives" | "time" | "completed";
+type SortKeySobrevivencia = "survived" | "points" | "time";
+
+interface JornadaEntry {
+  name: string;
+  points: number;
+  lives: number;
+  time: number; // seconds
+  completed: boolean;
+}
+
+interface SobrevivenciaEntry {
+  name: string;
+  survived: number;
+  points: number;
+  time: number; // seconds
+}
+
+const MOCK_JORNADA: JornadaEntry[] = [
+  { name: "Carlos M.", points: 14850, lives: 3, time: 412, completed: true },
+  { name: "Ana P.", points: 12300, lives: 2, time: 389, completed: true },
+  { name: "Pedro S.", points: 9800, lives: 1, time: 520, completed: false },
+  { name: "Maria L.", points: 7500, lives: 0, time: 345, completed: false },
+  { name: "João R.", points: 5200, lives: 2, time: 610, completed: false },
+  { name: "Lucas A.", points: 11200, lives: 3, time: 298, completed: true },
+  { name: "Fernanda G.", points: 8900, lives: 1, time: 475, completed: false },
+];
+
+const MOCK_SOBREVIVENCIA: SobrevivenciaEntry[] = [
+  { name: "Lucas F.", survived: 42, points: 8400, time: 1260 },
+  { name: "Bruna K.", survived: 38, points: 7200, time: 1140 },
+  { name: "Rafael D.", survived: 31, points: 5800, time: 930 },
+  { name: "Camila N.", survived: 25, points: 4500, time: 750 },
+  { name: "Thiago V.", survived: 19, points: 3200, time: 570 },
+  { name: "Sofia R.", survived: 35, points: 6800, time: 1050 },
+];
+
+const formatTime = (seconds: number) => {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, "0")}`;
 };
+
+const JORNADA_SORT_OPTIONS: { key: SortKeyJornada; label: string }[] = [
+  { key: "points", label: "Pontos" },
+  { key: "lives", label: "Vidas" },
+  { key: "time", label: "Tempo" },
+  { key: "completed", label: "Completo" },
+];
+
+const SOBREVIVENCIA_SORT_OPTIONS: { key: SortKeySobrevivencia; label: string }[] = [
+  { key: "survived", label: "Rodadas" },
+  { key: "points", label: "Pontos" },
+  { key: "time", label: "Tempo" },
+];
 
 const LeaderboardModal = () => {
   const [open, setOpen] = useState(false);
   const [activeMode, setActiveMode] = useState<GameMode>("jornada");
+  const [sortKeyJornada, setSortKeyJornada] = useState<SortKeyJornada>("points");
+  const [sortKeySobrevivencia, setSortKeySobrevivencia] = useState<SortKeySobrevivencia>("survived");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const leaderboard = MOCK_LEADERBOARD[activeMode];
+  const sortedJornada = useMemo(() => {
+    let data = [...MOCK_JORNADA];
+    if (searchQuery) {
+      data = data.filter((e) => e.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+    data.sort((a, b) => {
+      if (sortKeyJornada === "completed") return (b.completed ? 1 : 0) - (a.completed ? 1 : 0);
+      return (b[sortKeyJornada] as number) - (a[sortKeyJornada] as number);
+    });
+    return data;
+  }, [sortKeyJornada, searchQuery]);
+
+  const sortedSobrevivencia = useMemo(() => {
+    let data = [...MOCK_SOBREVIVENCIA];
+    if (searchQuery) {
+      data = data.filter((e) => e.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+    data.sort((a, b) => (b[sortKeySobrevivencia] as number) - (a[sortKeySobrevivencia] as number));
+    return data;
+  }, [sortKeySobrevivencia, searchQuery]);
+
+  const currentSortOptions = activeMode === "jornada" ? JORNADA_SORT_OPTIONS : SOBREVIVENCIA_SORT_OPTIONS;
+  const currentSortKey = activeMode === "jornada" ? sortKeyJornada : sortKeySobrevivencia;
+
+  const handleSortChange = (key: string) => {
+    if (activeMode === "jornada") setSortKeyJornada(key as SortKeyJornada);
+    else setSortKeySobrevivencia(key as SortKeySobrevivencia);
+  };
+
+  const entries = activeMode === "jornada" ? sortedJornada : sortedSobrevivencia;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="settings-icon-button" aria-label="Leaderboard">
+        <button className="leaderboard-icon-button" aria-label="Leaderboard">
           <Trophy />
         </button>
       </DialogTrigger>
@@ -64,31 +135,74 @@ const LeaderboardModal = () => {
             </button>
           </div>
 
+          {/* Search */}
+          <div className="leaderboard-search">
+            <Search className="leaderboard-search-icon" />
+            <input
+              type="text"
+              placeholder="Buscar jogador..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="leaderboard-search-input"
+            />
+          </div>
+
+          {/* Sort Filters */}
+          <div className="leaderboard-sort">
+            <ArrowDownWideNarrow className="w-4 h-4" style={{ color: "hsl(var(--muted-foreground))", flexShrink: 0 }} />
+            {currentSortOptions.map((opt) => (
+              <button
+                key={opt.key}
+                className={`leaderboard-sort-btn ${currentSortKey === opt.key ? "active" : ""}`}
+                onClick={() => handleSortChange(opt.key)}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+
           {/* Leaderboard List */}
           <div className="leaderboard-list">
-            {leaderboard.map((entry) => (
-              <div
-                key={entry.rank}
-                className={`leaderboard-entry ${entry.rank <= 3 ? `rank-${entry.rank}` : ""}`}
-              >
-                <div className="leaderboard-rank">
-                  {entry.rank <= 3 ? (
-                    <Trophy className={`w-5 h-5 trophy-${entry.rank}`} />
-                  ) : (
-                    <span>{entry.rank}</span>
+            {entries.length === 0 && (
+              <div className="leaderboard-empty">Nenhum jogador encontrado</div>
+            )}
+            {entries.map((entry, idx) => {
+              const rank = idx + 1;
+              return (
+                <div
+                  key={entry.name}
+                  className={`leaderboard-entry ${rank <= 3 ? `rank-${rank}` : ""}`}
+                >
+                  <div className="leaderboard-rank">
+                    {rank <= 3 ? (
+                      <Trophy className={`w-5 h-5 trophy-${rank}`} />
+                    ) : (
+                      <span>{rank}</span>
+                    )}
+                  </div>
+                  <div className="leaderboard-name">{entry.name}</div>
+
+                  {activeMode === "jornada" && (
+                    <div className="leaderboard-stats">
+                      <span className="lb-stat" title="Pontos">{(entry as JornadaEntry).points.toLocaleString()} pts</span>
+                      <span className="lb-stat" title="Vidas">❤️ {(entry as JornadaEntry).lives}</span>
+                      <span className="lb-stat" title="Tempo">⏱ {formatTime((entry as JornadaEntry).time)}</span>
+                      <span className={`lb-badge ${(entry as JornadaEntry).completed ? "badge-complete" : "badge-gameover"}`}>
+                        {(entry as JornadaEntry).completed ? "✓ Completo" : "✗ Game Over"}
+                      </span>
+                    </div>
+                  )}
+
+                  {activeMode === "sobrevivencia" && (
+                    <div className="leaderboard-stats">
+                      <span className="lb-stat" title="Rodadas">{(entry as SobrevivenciaEntry).survived} rodadas</span>
+                      <span className="lb-stat" title="Pontos">{(entry as SobrevivenciaEntry).points.toLocaleString()} pts</span>
+                      <span className="lb-stat" title="Tempo">⏱ {formatTime((entry as SobrevivenciaEntry).time)}</span>
+                    </div>
                   )}
                 </div>
-                <div className="leaderboard-name">{entry.name}</div>
-                <div className="leaderboard-score">
-                  {activeMode === "jornada"
-                    ? `${entry.score.toLocaleString()} pts`
-                    : `${entry.score} rodadas`}
-                </div>
-                {entry.stage && (
-                  <div className="leaderboard-stage">{entry.stage}</div>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </DialogContent>

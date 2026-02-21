@@ -455,6 +455,40 @@
     transform: scale(1.05) rotate(45deg);
   }
 
+  .leaderboard-icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid hsl(45 100% 50% / 0.4);
+    border-radius: 50%;
+    cursor: pointer;
+    background: linear-gradient(135deg, 
+      hsl(45 80% 25%) 0%, 
+      hsl(40 70% 35%) 50%, 
+      hsl(35 80% 30%) 100%);
+    color: hsl(45 100% 80%);
+    box-shadow: 0 0 15px hsl(45 100% 50% / 0.25), var(--shadow-button);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .leaderboard-icon-button svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .leaderboard-icon-button:hover {
+    transform: scale(1.1);
+    border-color: hsl(45 100% 50% / 0.7);
+    box-shadow: 0 0 35px hsl(45 100% 50% / 0.5), var(--shadow-button);
+    color: hsl(45 100% 90%);
+  }
+
+  .leaderboard-icon-button:active {
+    transform: scale(1.05);
+  }
+
   /* Old Config Button - kept for reference but renamed */
   .button-config {
     background: linear-gradient(135deg, 
@@ -992,17 +1026,88 @@
     color: hsl(var(--sobrevivencia-glow));
   }
 
+  .leaderboard-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: hsl(var(--muted));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+  }
+
+  .leaderboard-search-icon {
+    width: 1rem;
+    height: 1rem;
+    color: hsl(var(--muted-foreground));
+    flex-shrink: 0;
+  }
+
+  .leaderboard-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: hsl(var(--foreground));
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+  }
+
+  .leaderboard-search-input::placeholder {
+    color: hsl(var(--muted-foreground));
+  }
+
+  .leaderboard-sort {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .leaderboard-sort-btn {
+    padding: 0.3rem 0.65rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) / 1.5);
+    background: hsl(var(--background));
+    color: hsl(var(--muted-foreground));
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .leaderboard-sort-btn:hover {
+    border-color: hsl(var(--primary) / 0.5);
+    color: hsl(var(--foreground));
+  }
+
+  .leaderboard-sort-btn.active {
+    border-color: hsl(var(--primary));
+    background: hsl(var(--primary) / 0.15);
+    color: hsl(var(--primary));
+  }
+
   .leaderboard-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .leaderboard-empty {
+    text-align: center;
+    padding: 1.5rem;
+    color: hsl(var(--muted-foreground));
+    font-family: var(--font-body);
+    font-size: 0.85rem;
   }
 
   .leaderboard-entry {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.75rem 1rem;
+    padding: 0.6rem 0.75rem;
     background: hsl(var(--muted));
     border-radius: var(--radius);
     border: 1px solid hsl(var(--border));
@@ -1033,6 +1138,7 @@
     font-size: 1rem;
     font-weight: 700;
     color: hsl(var(--muted-foreground));
+    flex-shrink: 0;
   }
 
   .trophy-1 { color: hsl(45 100% 50%); }
@@ -1040,25 +1146,47 @@
   .trophy-3 { color: hsl(25 60% 50%); }
 
   .leaderboard-name {
-    flex: 1;
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: hsl(var(--foreground));
+    min-width: 5rem;
+    flex-shrink: 0;
   }
 
-  .leaderboard-score {
-    font-family: var(--font-display);
-    font-size: 0.9rem;
-    color: hsl(var(--primary));
-    letter-spacing: 0.02em;
+  .leaderboard-stats {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: flex-end;
+    flex-wrap: wrap;
   }
 
-  .leaderboard-stage {
+  .lb-stat {
     font-family: var(--font-body);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: hsl(var(--muted-foreground));
-    background: hsl(var(--background));
-    padding: 0.2rem 0.5rem;
+    white-space: nowrap;
+  }
+
+  .lb-badge {
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    padding: 0.15rem 0.4rem;
     border-radius: calc(var(--radius) / 2);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .lb-badge.badge-complete {
+    background: hsl(142 76% 36% / 0.2);
+    color: hsl(142 76% 55%);
+    border: 1px solid hsl(142 76% 36% / 0.3);
+  }
+
+  .lb-badge.badge-gameover {
+    background: hsl(0 70% 40% / 0.2);
+    color: hsl(0 70% 65%);
+    border: 1px solid hsl(0 70% 40% / 0.3);
   }
 }
