@@ -1,4 +1,4 @@
-import { Trophy, Map, Skull, Search, ArrowDownWideNarrow } from "lucide-react";
+import { Trophy, Map, Skull, Search, ArrowDownWideNarrow, Heart, Clock, CheckCircle, XCircle, Hash, Star } from "lucide-react";
 import { useState, useMemo } from "react";
 import {
   Dialog,
@@ -17,7 +17,8 @@ interface JornadaEntry {
   name: string;
   points: number;
   lives: number;
-  time: number; // seconds
+  maxLives: number;
+  time: number;
   completed: boolean;
 }
 
@@ -25,17 +26,17 @@ interface SobrevivenciaEntry {
   name: string;
   survived: number;
   points: number;
-  time: number; // seconds
+  time: number;
 }
 
 const MOCK_JORNADA: JornadaEntry[] = [
-  { name: "Carlos M.", points: 14850, lives: 3, time: 412, completed: true },
-  { name: "Ana P.", points: 12300, lives: 2, time: 389, completed: true },
-  { name: "Pedro S.", points: 9800, lives: 1, time: 520, completed: false },
-  { name: "Maria L.", points: 7500, lives: 0, time: 345, completed: false },
-  { name: "João R.", points: 5200, lives: 2, time: 610, completed: false },
-  { name: "Lucas A.", points: 11200, lives: 3, time: 298, completed: true },
-  { name: "Fernanda G.", points: 8900, lives: 1, time: 475, completed: false },
+  { name: "Carlos M.", points: 14850, lives: 3, maxLives: 3, time: 412, completed: true },
+  { name: "Ana P.", points: 12300, lives: 2, maxLives: 3, time: 389, completed: true },
+  { name: "Pedro S.", points: 9800, lives: 1, maxLives: 3, time: 520, completed: false },
+  { name: "Maria L.", points: 7500, lives: 0, maxLives: 3, time: 345, completed: false },
+  { name: "João R.", points: 5200, lives: 2, maxLives: 3, time: 610, completed: false },
+  { name: "Lucas A.", points: 11200, lives: 3, maxLives: 3, time: 298, completed: true },
+  { name: "Fernanda G.", points: 8900, lives: 1, maxLives: 3, time: 475, completed: false },
 ];
 
 const MOCK_SOBREVIVENCIA: SobrevivenciaEntry[] = [
@@ -102,8 +103,6 @@ const LeaderboardModal = () => {
     else setSortKeySobrevivencia(key as SortKeySobrevivencia);
   };
 
-  const entries = activeMode === "jornada" ? sortedJornada : sortedSobrevivencia;
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -111,12 +110,12 @@ const LeaderboardModal = () => {
           <Trophy />
         </button>
       </DialogTrigger>
-      <DialogContent className="settings-modal">
+      <DialogContent className="leaderboard-modal">
         <DialogHeader>
           <DialogTitle className="settings-title">Ranking</DialogTitle>
         </DialogHeader>
 
-        <div className="settings-content">
+        <div className="leaderboard-controls">
           {/* Mode Tabs */}
           <div className="leaderboard-tabs">
             <button
@@ -160,49 +159,114 @@ const LeaderboardModal = () => {
               </button>
             ))}
           </div>
+        </div>
 
-          {/* Leaderboard List */}
-          <div className="leaderboard-list">
-            {entries.length === 0 && (
-              <div className="leaderboard-empty">Nenhum jogador encontrado</div>
-            )}
-            {entries.map((entry, idx) => {
-              const rank = idx + 1;
-              return (
-                <div
-                  key={entry.name}
-                  className={`leaderboard-entry ${rank <= 3 ? `rank-${rank}` : ""}`}
-                >
-                  <div className="leaderboard-rank">
-                    {rank <= 3 ? (
-                      <Trophy className={`w-5 h-5 trophy-${rank}`} />
-                    ) : (
-                      <span>{rank}</span>
-                    )}
-                  </div>
-                  <div className="leaderboard-name">{entry.name}</div>
+        {/* Table */}
+        <div className="leaderboard-table-wrapper">
+          <table className="leaderboard-table">
+            <thead>
+              <tr>
+                <th className="lb-th lb-th-rank"><Hash className="w-3.5 h-3.5" /></th>
+                <th className="lb-th lb-th-name">Nome</th>
+                {activeMode === "jornada" ? (
+                  <>
+                    <th className="lb-th lb-th-center"><Star className="w-3.5 h-3.5" /></th>
+                    <th className="lb-th lb-th-center"><Heart className="w-3.5 h-3.5" /></th>
+                    <th className="lb-th lb-th-center"><Clock className="w-3.5 h-3.5" /></th>
+                    <th className="lb-th lb-th-center">Status</th>
+                  </>
+                ) : (
+                  <>
+                    <th className="lb-th lb-th-center"><Hash className="w-3.5 h-3.5" /></th>
+                    <th className="lb-th lb-th-center"><Star className="w-3.5 h-3.5" /></th>
+                    <th className="lb-th lb-th-center"><Clock className="w-3.5 h-3.5" /></th>
+                  </>
+                )}
+              </tr>
+            </thead>
+          </table>
 
-                  {activeMode === "jornada" && (
-                    <div className="leaderboard-stats">
-                      <span className="lb-stat" title="Pontos">{(entry as JornadaEntry).points.toLocaleString()} pts</span>
-                      <span className="lb-stat" title="Vidas">❤️ {(entry as JornadaEntry).lives}</span>
-                      <span className="lb-stat" title="Tempo">⏱ {formatTime((entry as JornadaEntry).time)}</span>
-                      <span className={`lb-badge ${(entry as JornadaEntry).completed ? "badge-complete" : "badge-gameover"}`}>
-                        {(entry as JornadaEntry).completed ? "✓ Completo" : "✗ Game Over"}
-                      </span>
-                    </div>
+          <div className="leaderboard-scroll-container">
+            <div className="leaderboard-scroll-fade-top" />
+            <div className="leaderboard-scroll-content">
+              <table className="leaderboard-table">
+                <tbody>
+                  {activeMode === "jornada" && sortedJornada.length === 0 && (
+                    <tr><td colSpan={6} className="leaderboard-empty">Nenhum jogador encontrado</td></tr>
+                  )}
+                  {activeMode === "sobrevivencia" && sortedSobrevivencia.length === 0 && (
+                    <tr><td colSpan={5} className="leaderboard-empty">Nenhum jogador encontrado</td></tr>
                   )}
 
-                  {activeMode === "sobrevivencia" && (
-                    <div className="leaderboard-stats">
-                      <span className="lb-stat" title="Rodadas">{(entry as SobrevivenciaEntry).survived} rodadas</span>
-                      <span className="lb-stat" title="Pontos">{(entry as SobrevivenciaEntry).points.toLocaleString()} pts</span>
-                      <span className="lb-stat" title="Tempo">⏱ {formatTime((entry as SobrevivenciaEntry).time)}</span>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                  {activeMode === "jornada" && sortedJornada.map((entry, idx) => {
+                    const rank = idx + 1;
+                    return (
+                      <tr key={entry.name} className={`lb-row ${rank <= 3 ? `rank-${rank}` : ""}`}>
+                        <td className="lb-td lb-td-rank">
+                          {rank <= 3 ? (
+                            <Trophy className={`w-4 h-4 trophy-${rank}`} />
+                          ) : (
+                            <span className="lb-rank-num">{rank}</span>
+                          )}
+                        </td>
+                        <td className="lb-td lb-td-name">{entry.name}</td>
+                        <td className="lb-td lb-td-center">
+                          <span className="lb-points">{entry.points.toLocaleString()}</span>
+                        </td>
+                        <td className="lb-td lb-td-center">
+                          <span className="lb-lives-container">
+                            <Heart className="w-3 h-3 lb-heart-icon" />
+                            <span>{entry.lives}/{entry.maxLives}</span>
+                          </span>
+                        </td>
+                        <td className="lb-td lb-td-center">
+                          <span className="lb-time">{formatTime(entry.time)}</span>
+                        </td>
+                        <td className="lb-td lb-td-center">
+                          {entry.completed ? (
+                            <span className="lb-badge badge-complete">
+                              <CheckCircle className="w-3.5 h-3.5" />
+                              Completo
+                            </span>
+                          ) : (
+                            <span className="lb-badge badge-gameover">
+                              <XCircle className="w-3.5 h-3.5" />
+                              Game Over
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+
+                  {activeMode === "sobrevivencia" && sortedSobrevivencia.map((entry, idx) => {
+                    const rank = idx + 1;
+                    return (
+                      <tr key={entry.name} className={`lb-row ${rank <= 3 ? `rank-${rank}` : ""}`}>
+                        <td className="lb-td lb-td-rank">
+                          {rank <= 3 ? (
+                            <Trophy className={`w-4 h-4 trophy-${rank}`} />
+                          ) : (
+                            <span className="lb-rank-num">{rank}</span>
+                          )}
+                        </td>
+                        <td className="lb-td lb-td-name">{entry.name}</td>
+                        <td className="lb-td lb-td-center">
+                          <span className="lb-survived">{entry.survived}</span>
+                        </td>
+                        <td className="lb-td lb-td-center">
+                          <span className="lb-points">{entry.points.toLocaleString()}</span>
+                        </td>
+                        <td className="lb-td lb-td-center">
+                          <span className="lb-time">{formatTime(entry.time)}</span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <div className="leaderboard-scroll-fade-bottom" />
           </div>
         </div>
       </DialogContent>
