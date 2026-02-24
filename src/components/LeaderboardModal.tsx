@@ -1,4 +1,4 @@
-import { Trophy, Map, Skull, Search, ArrowDownWideNarrow, Heart, Clock, CheckCircle, XCircle, Hash, Star } from "lucide-react";
+import { Trophy, Map, Skull, Search, Heart, Clock, CheckCircle, XCircle, Hash, Star } from "lucide-react";
 import { useState, useMemo } from "react";
 import {
   Dialog,
@@ -54,18 +54,6 @@ const formatTime = (seconds: number) => {
   return `${m}:${s.toString().padStart(2, "0")}`;
 };
 
-const JORNADA_SORT_OPTIONS: { key: SortKeyJornada; label: string }[] = [
-  { key: "points", label: "Pontos" },
-  { key: "lives", label: "Vidas" },
-  { key: "time", label: "Tempo" },
-  { key: "completed", label: "Completo" },
-];
-
-const SOBREVIVENCIA_SORT_OPTIONS: { key: SortKeySobrevivencia; label: string }[] = [
-  { key: "survived", label: "Rodadas" },
-  { key: "points", label: "Pontos" },
-  { key: "time", label: "Tempo" },
-];
 
 const LeaderboardModal = () => {
   const [open, setOpen] = useState(false);
@@ -95,13 +83,6 @@ const LeaderboardModal = () => {
     return data;
   }, [sortKeySobrevivencia, searchQuery]);
 
-  const currentSortOptions = activeMode === "jornada" ? JORNADA_SORT_OPTIONS : SOBREVIVENCIA_SORT_OPTIONS;
-  const currentSortKey = activeMode === "jornada" ? sortKeyJornada : sortKeySobrevivencia;
-
-  const handleSortChange = (key: string) => {
-    if (activeMode === "jornada") setSortKeyJornada(key as SortKeyJornada);
-    else setSortKeySobrevivencia(key as SortKeySobrevivencia);
-  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -146,19 +127,6 @@ const LeaderboardModal = () => {
             />
           </div>
 
-          {/* Sort Filters */}
-          <div className="leaderboard-sort">
-            <ArrowDownWideNarrow className="w-4 h-4" style={{ color: "hsl(var(--muted-foreground))", flexShrink: 0 }} />
-            {currentSortOptions.map((opt) => (
-              <button
-                key={opt.key}
-                className={`leaderboard-sort-btn ${currentSortKey === opt.key ? "active" : ""}`}
-                onClick={() => handleSortChange(opt.key)}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Table */}
@@ -170,16 +138,16 @@ const LeaderboardModal = () => {
                 <th className="lb-th lb-th-name">Nome</th>
                 {activeMode === "jornada" ? (
                   <>
-                    <th className="lb-th lb-th-center"><Star className="w-3.5 h-3.5" /></th>
-                    <th className="lb-th lb-th-center"><Heart className="w-3.5 h-3.5" /></th>
-                    <th className="lb-th lb-th-center"><Clock className="w-3.5 h-3.5" /></th>
-                    <th className="lb-th lb-th-center">Status</th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "points" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("points")}><Star className="w-3.5 h-3.5" /></th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "lives" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("lives")}><Heart className="w-3.5 h-3.5" /></th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "time" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("time")}><Clock className="w-3.5 h-3.5" /></th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "completed" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("completed")}>Status</th>
                   </>
                 ) : (
                   <>
-                    <th className="lb-th lb-th-center"><Hash className="w-3.5 h-3.5" /></th>
-                    <th className="lb-th lb-th-center"><Star className="w-3.5 h-3.5" /></th>
-                    <th className="lb-th lb-th-center"><Clock className="w-3.5 h-3.5" /></th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeySobrevivencia === "survived" ? "lb-th-active" : ""}`} onClick={() => setSortKeySobrevivencia("survived")}><Hash className="w-3.5 h-3.5" /></th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeySobrevivencia === "points" ? "lb-th-active" : ""}`} onClick={() => setSortKeySobrevivencia("points")}><Star className="w-3.5 h-3.5" /></th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeySobrevivencia === "time" ? "lb-th-active" : ""}`} onClick={() => setSortKeySobrevivencia("time")}><Clock className="w-3.5 h-3.5" /></th>
                   </>
                 )}
               </tr>

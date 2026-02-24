@@ -1137,6 +1137,31 @@
 
   .lb-th svg {
     opacity: 0.6;
+    transition: all 0.2s ease;
+  }
+
+  .lb-th-sortable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+
+  .lb-th-sortable:hover {
+    color: hsl(var(--foreground));
+  }
+
+  .lb-th-sortable:hover svg {
+    opacity: 1;
+  }
+
+  .lb-th-active {
+    color: hsl(var(--primary)) !important;
+    border-bottom-color: hsl(var(--primary)) !important;
+  }
+
+  .lb-th-active svg {
+    opacity: 1 !important;
+    color: hsl(var(--primary));
   }
 
   .lb-th-rank {
