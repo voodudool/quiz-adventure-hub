@@ -1,4 +1,4 @@
-import { Trophy, Map, Skull, Search, Heart, Clock, CheckCircle, XCircle, Hash, Star } from "lucide-react";
+import { Trophy, Map, Skull, Search, Heart, Clock, CheckCircle, XCircle, Hash, Star, ChevronDown } from "lucide-react";
 import { useState, useMemo } from "react";
 import {
   Dialog,
@@ -138,16 +138,16 @@ const LeaderboardModal = () => {
                 <th className="lb-th lb-th-name">Nome</th>
                 {activeMode === "jornada" ? (
                   <>
-                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "points" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("points")}><Star className="w-3.5 h-3.5" /></th>
-                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "lives" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("lives")}><Heart className="w-3.5 h-3.5" /></th>
-                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "time" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("time")}><Clock className="w-3.5 h-3.5" /></th>
-                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "completed" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("completed")}>Status</th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "points" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("points")}><Star className="w-3.5 h-3.5" />{sortKeyJornada === "points" && <ChevronDown className="w-3 h-3 lb-sort-arrow" />}</th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "lives" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("lives")}><Heart className="w-3.5 h-3.5" />{sortKeyJornada === "lives" && <ChevronDown className="w-3 h-3 lb-sort-arrow" />}</th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "time" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("time")}><Clock className="w-3.5 h-3.5" />{sortKeyJornada === "time" && <ChevronDown className="w-3 h-3 lb-sort-arrow" />}</th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeyJornada === "completed" ? "lb-th-active" : ""}`} onClick={() => setSortKeyJornada("completed")}>Status{sortKeyJornada === "completed" && <ChevronDown className="w-3 h-3 lb-sort-arrow" />}</th>
                   </>
                 ) : (
                   <>
-                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeySobrevivencia === "survived" ? "lb-th-active" : ""}`} onClick={() => setSortKeySobrevivencia("survived")}><Hash className="w-3.5 h-3.5" /></th>
-                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeySobrevivencia === "points" ? "lb-th-active" : ""}`} onClick={() => setSortKeySobrevivencia("points")}><Star className="w-3.5 h-3.5" /></th>
-                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeySobrevivencia === "time" ? "lb-th-active" : ""}`} onClick={() => setSortKeySobrevivencia("time")}><Clock className="w-3.5 h-3.5" /></th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeySobrevivencia === "survived" ? "lb-th-active" : ""}`} onClick={() => setSortKeySobrevivencia("survived")}><Hash className="w-3.5 h-3.5" />{sortKeySobrevivencia === "survived" && <ChevronDown className="w-3 h-3 lb-sort-arrow" />}</th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeySobrevivencia === "points" ? "lb-th-active" : ""}`} onClick={() => setSortKeySobrevivencia("points")}><Star className="w-3.5 h-3.5" />{sortKeySobrevivencia === "points" && <ChevronDown className="w-3 h-3 lb-sort-arrow" />}</th>
+                    <th className={`lb-th lb-th-center lb-th-sortable ${sortKeySobrevivencia === "time" ? "lb-th-active" : ""}`} onClick={() => setSortKeySobrevivencia("time")}><Clock className="w-3.5 h-3.5" />{sortKeySobrevivencia === "time" && <ChevronDown className="w-3 h-3 lb-sort-arrow" />}</th>
                   </>
                 )}
               </tr>
