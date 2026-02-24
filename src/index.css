@@ -1144,6 +1144,15 @@
     cursor: pointer;
     transition: all 0.2s ease;
     user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+  }
+
+  .lb-sort-arrow {
+    flex-shrink: 0;
+    opacity: 0.9;
   }
 
   .lb-th-sortable:hover {
