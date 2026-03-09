@@ -3,13 +3,28 @@ import { Crown, Map, Skull, Sparkles, User, Users } from "lucide-react";
 import SettingsModal from "@/components/SettingsModal";
 import LeaderboardModal from "@/components/LeaderboardModal";
 import LoadingModal from "@/components/LoadingModal";
+import MultiplayerModeModal from "@/components/MultiplayerModeModal";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [multiplayerOpen, setMultiplayerOpen] = useState(false);
+  const [multiplayerGameMode, setMultiplayerGameMode] = useState<"jornada" | "sobrevivencia">("jornada");
+
+  const openMultiplayer = (mode: "jornada" | "sobrevivencia") => {
+    setMultiplayerGameMode(mode);
+    setMultiplayerOpen(true);
+  };
 
   return (
     <div className="game-menu">
       {isLoading && <LoadingModal onLoadComplete={() => setIsLoading(false)} />}
+
+      <MultiplayerModeModal
+        open={multiplayerOpen}
+        onClose={() => setMultiplayerOpen(false)}
+        gameMode={multiplayerGameMode}
+      />
+
       {/* Settings Button - Top Right Corner */}
       <div className="settings-corner">
         <SettingsModal />
@@ -55,7 +70,7 @@ const Index = () => {
               <User className="subbutton-icon" />
               Solo
             </button>
-            <button className="game-subbutton subbutton-jornada subbutton-multi">
+            <button className="game-subbutton subbutton-jornada subbutton-multi" onClick={() => openMultiplayer("jornada")}>
               <Users className="subbutton-icon" />
               Multiplayer
             </button>
@@ -74,7 +89,7 @@ const Index = () => {
               <User className="subbutton-icon" />
               Solo
             </button>
-            <button className="game-subbutton subbutton-sobrevivencia subbutton-multi">
+            <button className="game-subbutton subbutton-sobrevivencia subbutton-multi" onClick={() => openMultiplayer("sobrevivencia")}>
               <Users className="subbutton-icon" />
               Multiplayer
             </button>
