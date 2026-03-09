@@ -70,7 +70,7 @@ const Index = () => {
               <User className="subbutton-icon" />
               Solo
             </button>
-            <button className="game-subbutton subbutton-jornada subbutton-multi">
+            <button className="game-subbutton subbutton-jornada subbutton-multi" onClick={() => openMultiplayer("jornada")}>
               <Users className="subbutton-icon" />
               Multiplayer
             </button>
@@ -89,7 +89,7 @@ const Index = () => {
               <User className="subbutton-icon" />
               Solo
             </button>
-            <button className="game-subbutton subbutton-sobrevivencia subbutton-multi">
+            <button className="game-subbutton subbutton-sobrevivencia subbutton-multi" onClick={() => openMultiplayer("sobrevivencia")}>
               <Users className="subbutton-icon" />
               Multiplayer
             </button>
