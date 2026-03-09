@@ -3,9 +3,17 @@ import { Crown, Map, Skull, Sparkles, User, Users } from "lucide-react";
 import SettingsModal from "@/components/SettingsModal";
 import LeaderboardModal from "@/components/LeaderboardModal";
 import LoadingModal from "@/components/LoadingModal";
+import MultiplayerModeModal from "@/components/MultiplayerModeModal";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [multiplayerOpen, setMultiplayerOpen] = useState(false);
+  const [multiplayerGameMode, setMultiplayerGameMode] = useState<"jornada" | "sobrevivencia">("jornada");
+
+  const openMultiplayer = (mode: "jornada" | "sobrevivencia") => {
+    setMultiplayerGameMode(mode);
+    setMultiplayerOpen(true);
+  };
 
   return (
     <div className="game-menu">
