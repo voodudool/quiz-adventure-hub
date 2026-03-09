@@ -18,6 +18,13 @@ const Index = () => {
   return (
     <div className="game-menu">
       {isLoading && <LoadingModal onLoadComplete={() => setIsLoading(false)} />}
+
+      <MultiplayerModeModal
+        open={multiplayerOpen}
+        onClose={() => setMultiplayerOpen(false)}
+        gameMode={multiplayerGameMode}
+      />
+
       {/* Settings Button - Top Right Corner */}
       <div className="settings-corner">
         <SettingsModal />
